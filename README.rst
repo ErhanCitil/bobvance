@@ -4,7 +4,7 @@ bobvance
 
 :Version: 0.1.0
 :Source: https://bitbucket.org/maykinmedia/bobvance
-:Keywords: ``<keywords>``
+:Keywords: ``Python, Django``
 :PythonVersion: 3.9
 
 |build-status| |requirements|
