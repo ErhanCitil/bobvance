@@ -20,7 +20,8 @@ class Product(models.Model):
     beschrijving = models.CharField(max_length=1000)
     afbeelding = models.ImageField(upload_to='images/')
     customer = models.ManyToManyField(Customer, related_name="producten", through='Order')
-    
+    nieuw = models.BooleanField(default=True)
+
     def __str__(self):
         return self.naam
 
