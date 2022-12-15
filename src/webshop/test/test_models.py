@@ -22,20 +22,20 @@ class TestModels(TestCase):
 
         self.order = Order.objects.create(
             customer=self.customer,
-            product=self.product,
-            amount=1,
             status='In behandeling',
         )
-
+            
         self.verzekering = Verzekering.objects.create(
             name='test',
         )
 
-        self.verzekering.product.add(self.product)
-        self.verzekering.save()
+        self.orderproduct = OrderProduct.objects.create(
+            order=self.order,
+            product=self.product,
+            amount=1,
+        )
 
-        self.product.customer.add(self.customer)
-        self.product.save()
+        self.verzekering.product.add(self.product)
 
     def test_product(self):
         self.assertEqual(self.product.name, 'test')
@@ -43,7 +43,6 @@ class TestModels(TestCase):
         self.assertEqual(self.product.price, 500.00)
         self.assertEqual(self.product.image, 'images/1.jpg')
         self.assertEqual(self.product.new, True)
-        self.assertEqual(self.product.customer.first(), self.customer)
 
     def test_customer(self):
         self.assertEqual(self.customer.firstname, 'test')
@@ -57,10 +56,13 @@ class TestModels(TestCase):
 
     def test_order(self):
         self.assertEqual(self.order.customer, self.customer)
-        self.assertEqual(self.order.product, self.product)
-        self.assertEqual(self.order.amount, 1)
         self.assertEqual(self.order.status, 'In behandeling')
 
     def test_verzekering(self):
         self.assertEqual(self.verzekering.name, 'test')
         self.assertEqual(self.verzekering.product.first(), self.product)
+    
+    def test_orderproduct(self):
+        self.assertEqual(self.orderproduct.order, self.order)
+        self.assertEqual(self.orderproduct.product, self.product)
+        self.assertEqual(self.orderproduct.amount, 1)

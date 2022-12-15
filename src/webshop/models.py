@@ -27,6 +27,7 @@ class Product(models.Model):
         return self.name
 
 ORDER_STATUS_CHOICES = (
+    # Nooit handig om spaties en hoofdlettergevoeligheid te gebruiken voor database waarden
     ('in_behandeling', 'In behandeling'),
     ('verzonden', 'Verzonden'),
     ('afgeleverd', 'Afgeleverd'),
