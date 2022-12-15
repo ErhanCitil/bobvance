@@ -1,13 +1,15 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
 <nav class="flex items-center bg-gray-900 justify-between text-white flex-wrap bg-teal p-6">
     <div class="flex items-center flex-no-shrink mr-6">
       <span class="font-semibold text-xl tracking-tight">Bobvance</span>
     </div>
     <div class="w-full block flex-grow lg:flex items-center lg:w-auto">
       <div class="text-sm lg:flex-grow">
-        <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+        <a href="{% url 'index'%}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
           Home
         </a>
-        <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+        <a href="{% url 'assortiment' %}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
           Assortiment
         </a>
         <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white">
