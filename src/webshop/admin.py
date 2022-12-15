@@ -8,5 +8,10 @@ class OrderInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderInline]
 
-for model in [Customer, Product, Verzekering]:
+for model in [Customer, Verzekering]:
     admin.site.register(model)
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'new', 'price' )
+    list_filter = ('new', )
