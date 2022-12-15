@@ -30,7 +30,7 @@ class Product(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, related_name="orders",on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name="orders", on_delete=models.CASCADE)
-    aantal = models.IntegerField()
+    amount =  models.PositiveIntegerField(default=1)
     date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
