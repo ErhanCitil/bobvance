@@ -24,7 +24,15 @@ class TestModels(TestCase):
             customer=self.customer,
             product=self.product,
             amount=1,
+            status='In behandeling',
         )
+
+        self.verzekering = Verzekering.objects.create(
+            name='test',
+        )
+
+        self.verzekering.product.add(self.product)
+        self.verzekering.save()
 
         self.product.customer.add(self.customer)
         self.product.save()
@@ -51,3 +59,8 @@ class TestModels(TestCase):
         self.assertEqual(self.order.customer, self.customer)
         self.assertEqual(self.order.product, self.product)
         self.assertEqual(self.order.amount, 1)
+        self.assertEqual(self.order.status, 'In behandeling')
+
+    def test_verzekering(self):
+        self.assertEqual(self.verzekering.name, 'test')
+        self.assertEqual(self.verzekering.product.first(), self.product)
