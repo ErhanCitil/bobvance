@@ -119,6 +119,7 @@ INSTALLED_APPS = [
     "bobvance.accounts",
     "bobvance.utils",
     'webshop.apps.WebshopConfig',
+    'form.apps.FormConfig',
 ]
 
 MIDDLEWARE = [
