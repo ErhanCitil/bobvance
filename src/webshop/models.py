@@ -27,14 +27,22 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+ORDER_STATUS_CHOICES = (
+    ('In behandeling', 'In behandeling'),
+    ('Verzonden', 'Verzonden'),
+    ('Afgeleverd', 'Afgeleverd'),
+    ('Geannuleerd', 'Geannuleerd'),
+)
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, related_name="orders",on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name="orders", on_delete=models.CASCADE)
+    # Amount kan niet een negatief getal zijn.
     amount =  models.PositiveIntegerField(default=1)
-    date = models.DateTimeField(auto_now_add=True)
-    
+    status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES, default='In behandeling')
+
     def __str__(self):
-        return self.order.id
+        return f"Order {self.id}"
 
 class Verzekering(models.Model):
     name = models.CharField(max_length=100)
@@ -42,3 +50,4 @@ class Verzekering(models.Model):
 
     def __str__(self):
         return self.name
+

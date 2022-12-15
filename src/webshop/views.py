@@ -22,3 +22,5 @@ class Assortiment(generic.ListView):
     template_name = 'webshop/assortiment.html'
     model = Product
     context_object_name = 'producten'
+
+    
