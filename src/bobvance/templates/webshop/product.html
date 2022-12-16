@@ -35,6 +35,11 @@
                   </svg>
                 </span>
               </div>
+              {% if product.new is True%}
+               <p class="leading-relaxed">Nieuw</p>
+               {% else %}
+                <p class="leading-relaxed mb-2"><b>Let op!</b> Dit is een <b>gebruikte</b> product!</p>
+              {% endif %}
               <p class="leading-relaxed">{{product.description}}</p>
               <div class="flex">
                 <span class="title-font font-medium text-2xl mt-6 text-gray-900">€{{product.price}}</span>
