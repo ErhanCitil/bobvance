@@ -1,6 +1,6 @@
 from django.test import TestCase
 from webshop.models import *
-import datetime as dt
+
 class TestModels(TestCase):
     def setUp(self):
         self.customer = Customer.objects.create(

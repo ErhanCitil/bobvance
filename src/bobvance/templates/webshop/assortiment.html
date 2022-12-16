@@ -12,7 +12,7 @@
     <div class="flex flex-wrap">
         {% for product in producten%}
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg mt-5 ml-4 shadow-md ">
-            <a href="#">
+            <a href="{% url 'product' product.pk%}">
                 <img class="rounded-t-lg" src="/media/{{product.image}}" alt="" />
             </a>
             <div class="p-5">
