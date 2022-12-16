@@ -7,6 +7,15 @@
     <title>Contact Form | Bobvance</title>
 </head>
 <body>
-    
+    {% include 'components/header.html' %}
+
+    <h1 class="font-bold text-3xl text-center">Contact/Aanvraag Formulier</h1>
+    <h2 class="font-bold text-xl text-center mt-4">Neem via de onderstaande contact formulier contact met ons op voor eventuele vragen of voor je reperatie aanvragen!</h2>
+    <form action="" class="mt-2" method ="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="flex ml-auto text-white bg-blue-700 mt-6 border-0 py-2 px-6 focus:outline-none hover:bg-blue-800 rounded">Voeg toe aan winkelwagen</button>
+    </form>
 </body>
 </html>

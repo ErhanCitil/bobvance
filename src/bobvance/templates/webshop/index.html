@@ -10,7 +10,12 @@
 <body>
     {% include 'components/header.html' %}
 
-    <div class="flex flex-wrap">
+    <div class="font-bold text-3xl text-center">
+        <h1>Welkom bij Bobvance!</h1>
+        <h2>Bij Bobvance vind je een ruim assortiment aan nieuwe en gebruikte koelkasten! Deze kun je allemaal vinden op de <a href="{% url 'assortiment' %}" class='text-gray-400'>assortiment</a> pagina</h2>
+    </div>
+
+    <div class="flex flex-wrap mt-12">
     {% for product in producten%}
     <div class="max-w-sm bg-white border border-gray-200 rounded-lg mt-5 ml-4 shadow-md ">
         <a href="#">
