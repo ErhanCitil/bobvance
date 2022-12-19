@@ -34,6 +34,21 @@ ORDER_STATUS_CHOICES = (
     ('geannuleerd', 'Geannuleerd'),
 )
 
+class Cart(models.Model):
+    # Created_at is voor later, omdat ik ook dingen wil doen met de custom management command
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Cart {self.id}"
+
+class CartProduct(models.Model):
+    cart = models.ForeignKey(Cart, related_name="cart_product", on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name="cart_product", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"Cart {self.cart.id}"
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, related_name="orders",on_delete=models.CASCADE)
     status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES, default='In behandeling')

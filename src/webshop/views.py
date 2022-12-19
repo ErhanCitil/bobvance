@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from .models import *
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 class Index(generic.ListView):
@@ -23,4 +24,10 @@ class Assortiment(generic.ListView):
     model = Product
     context_object_name = 'producten'
 
-    
+    def get_select_new(self):
+     if self.request.POST.get('new') == 'new':
+        return Product.objects.filter(new=True)
+
+    def get_select_not_new(self):
+        if self.request.POST.get('gebruikt') == 'gebruikt':
+            return Product.objects.filter(new=False)
