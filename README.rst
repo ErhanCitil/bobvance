@@ -7,8 +7,6 @@ bobvance
 :Keywords: ``Python, Django``
 :PythonVersion: 3.10
 
-|build-status| |requirements|
-
 ``This GitHub Repository showcases a Django-based webshop project designed for seamless online shopping with user-friendly features.``
 
 
