@@ -3,21 +3,19 @@ bobvance
 ==================
 
 :Version: 0.1.0
-:Source: https://bitbucket.org/maykinmedia/bobvance
-:Keywords: ``<keywords>``
+:Source: https://github.com/erhancitil/bobvance
+:Keywords: ``Python, Django``
 :PythonVersion: 3.10
 
 |build-status| |requirements|
 
-``<oneliner describing the project>``
-
-Developed by `Maykin Media B.V.`_ for ``<client>``
+``This GitHub Repository showcases a Django-based webshop project designed for seamless online shopping with user-friendly features.``
 
 
 Introduction
 ============
 
-``<describe the project in a few paragraphs and briefly mention the features>``
+``This GitHub Repository showcases my Django-based webshop project, a versatile platform designed for online commerce. The webshop offers an extensive range of products, easy navigation, and a user-friendly interface that simplifies the shopping experience. Built on Django's robust framework, the project incorporates essential features such as user registration and authentication, product categorization, seamless checkout, and secure payment processing. It also includes an admin panel for effortless management of products, orders, and user interactions. Explore this project to witness how Django can empower businesses to establish a strong online presence and provide customers with a hassle-free shopping experience.``
 
 
 Documentation
@@ -30,17 +28,5 @@ commands.
 References
 ==========
 
-* `Issues <https://taiga.maykinmedia.nl/project/bobvance>`_
-* `Code <https://bitbucket.org/maykinmedia/bobvance>`_
-
-
-.. |build-status| image:: http://jenkins.maykin.nl/buildStatus/icon?job=bitbucket/bobvance/master
-    :alt: Build status
-    :target: http://jenkins.maykin.nl/job/bobvance
-
-.. |requirements| image:: https://requires.io/bitbucket/maykinmedia/bobvance/requirements.svg?branch=master
-     :target: https://requires.io/bitbucket/maykinmedia/bobvance/requirements/?branch=master
-     :alt: Requirements status
-
-
-.. _Maykin Media B.V.: https://www.maykinmedia.nl
+* `Issues <https://github.com/erhancitil/issues>`_
+* `Code <https://github.com/erhancitil/bobvance>`_

@@ -8,8 +8,8 @@ class PreventPrivilegeEscalationMixin:
     # These class attributes are set by admin._UserAdmin when instantiating the
     # form. Unfortunately, it was not possible to set these via the constructor
     # due to the way Django internals instantiates admin forms.
-    _current_user: User | None = None
-    _target_user: User | None = None
+    _current_user: None
+    _target_user: None
 
     def clean(self):
         if self._current_user is None:  # pragma: no cover

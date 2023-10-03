@@ -44,7 +44,7 @@ development machine.
 
    .. code-block:: bash
 
-       $ git clone git@bitbucket.org:maykinmedia/bobvance.git
+       $ git clone git@github.com:ErhanCitil/bobvance.git
        $ cd bobvance
 
 3. Install all required (backend) libraries.
@@ -162,7 +162,7 @@ The easiest way to get the project started is by using `Docker Compose`_.
 
    .. code-block:: bash
 
-       $ git clone git@bitbucket.org:maykinmedia/bobvance.git
+       $ git clone git@github.com:ErhanCitil/bobvance.git
        Cloning into 'bobvance'...
        ...
 
