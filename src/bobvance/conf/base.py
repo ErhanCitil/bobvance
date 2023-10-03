@@ -117,7 +117,6 @@ INSTALLED_APPS = [
     "bobvance.base",
 
     "phonenumber_field",
-    "address",
 ]
 
 MIDDLEWARE = [

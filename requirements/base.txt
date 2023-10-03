@@ -22,6 +22,7 @@ django==3.2.21
     #   django-axes
     #   django-formtools
     #   django-hijack
+    #   django-localflavor
     #   django-otp
     #   django-phonenumber-field
     #   django-redis
@@ -34,6 +35,8 @@ django-axes==6.1.1
 django-formtools==2.4.1
     # via maykin-django-two-factor-auth
 django-hijack==3.4.1
+    # via -r requirements/base.in
+django-localflavor==4.0
     # via -r requirements/base.in
 django-ordered-model==3.7.4
     # via django-admin-index
@@ -65,6 +68,8 @@ python-decouple==3.8
     # via -r requirements/base.in
 python-dotenv==1.0.0
     # via -r requirements/base.in
+python-stdnum==1.19
+    # via django-localflavor
 pytz==2023.3.post1
     # via
     #   -r requirements/base.in
