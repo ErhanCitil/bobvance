@@ -114,6 +114,7 @@ INSTALLED_APPS = [
     # Project applications.
     "bobvance.accounts",
     "bobvance.utils",
+    "bobvance.base",
 ]
 
 MIDDLEWARE = [
