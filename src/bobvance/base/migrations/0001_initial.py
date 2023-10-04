@@ -6,25 +6,36 @@ import phonenumber_field.modelfields
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Customer',
+            name="Customer",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('firstname', models.CharField(max_length=50)),
-                ('lastname', models.CharField(max_length=50)),
-                ('email', models.EmailField(max_length=254)),
-                ('phonenumber', phonenumber_field.modelfields.PhoneNumberField(max_length=128, region=None)),
-                ('address', models.CharField(max_length=100)),
-                ('postal_code', localflavor.nl.models.NLZipCodeField(max_length=7)),
-                ('city', models.CharField(max_length=50)),
-                ('country', models.CharField(max_length=50)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("firstname", models.CharField(max_length=50)),
+                ("lastname", models.CharField(max_length=50)),
+                ("email", models.EmailField(max_length=254)),
+                (
+                    "phonenumber",
+                    phonenumber_field.modelfields.PhoneNumberField(
+                        max_length=128, region=None
+                    ),
+                ),
+                ("address", models.CharField(max_length=100)),
+                ("postal_code", localflavor.nl.models.NLZipCodeField(max_length=7)),
+                ("city", models.CharField(max_length=50)),
+                ("country", models.CharField(max_length=50)),
             ],
         ),
     ]

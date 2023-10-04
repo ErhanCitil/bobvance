@@ -40,6 +40,7 @@ class SmokeTests(WebTest):
 
         self.assertEqual(response.status_code, 200)
 
+
 class PasswordResetViewTests(TestCase):
     def setUp(self):
         super().setUp()
