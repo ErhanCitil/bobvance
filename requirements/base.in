@@ -14,6 +14,7 @@ django-redis
 django-rosetta
 maykin-django-two-factor-auth
 phonenumbers
+django-localflavor
 
 # API libraries
 # djangorestframework

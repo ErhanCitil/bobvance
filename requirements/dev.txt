@@ -80,6 +80,7 @@ django==3.2.21
     #   django-formtools
     #   django-hijack
     #   django-jenkins
+    #   django-localflavor
     #   django-otp
     #   django-phonenumber-field
     #   django-redis
@@ -107,6 +108,10 @@ django-hijack==3.4.1
     #   -c requirements/ci.txt
     #   -r requirements/ci.txt
 django-jenkins==0.110.0
+    # via
+    #   -c requirements/ci.txt
+    #   -r requirements/ci.txt
+django-localflavor==4.0
     # via
     #   -c requirements/ci.txt
     #   -r requirements/ci.txt
@@ -282,6 +287,11 @@ python-dotenv==1.0.0
     # via
     #   -c requirements/ci.txt
     #   -r requirements/ci.txt
+python-stdnum==1.19
+    # via
+    #   -c requirements/ci.txt
+    #   -r requirements/ci.txt
+    #   django-localflavor
 pytz==2023.3.post1
     # via
     #   -c requirements/ci.txt

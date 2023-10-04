@@ -5,7 +5,7 @@
 
 # Stage 1 - Backend build environment
 # includes compilers and build tooling to create the environment
-FROM python:3.10.9-slim-bullseye AS backend-build
+FROM python:3.9-slim-bullseye AS backend-build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         pkg-config \
@@ -24,7 +24,7 @@ RUN pip install -r requirements/production.txt
 
 
 # Stage 2 - Install frontend deps and build assets
-FROM node:13-buster AS frontend-build
+FROM node:18-buster AS frontend-build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
@@ -47,7 +47,7 @@ RUN npm run build
 
 
 # Stage 3 - Build docker image suitable for production
-FROM python:3.10.9-slim-bullseye
+FROM python:3.9-slim-bullseye
 
 # Stage 3.1 - Set up the needed production dependencies
 # install all the dependencies for GeoDjango
@@ -73,7 +73,7 @@ RUN mkdir /app/media
 VOLUME ["/app/log", "/app/media"]
 
 # copy backend build deps
-COPY --from=backend-build /usr/local/lib/python3.10 /usr/local/lib/python3.10
+COPY --from=backend-build /usr/local/lib/python3.9 /usr/local/lib/python3.9
 COPY --from=backend-build /usr/local/bin/uwsgi /usr/local/bin/uwsgi
 # Uncomment if you use celery
 # COPY --from=backend-build /usr/local/bin/celery /usr/local/bin/celery
@@ -102,7 +102,7 @@ ENV RELEASE=${RELEASE} \
 ARG SECRET_KEY=dummy
 
 LABEL org.label-schema.vcs-ref=$COMMIT_HASH \
-      org.label-schema.vcs-url="https://bitbucket.org/maykinmedia/bobvance" \
+      org.label-schema.vcs-url="https://github.com/erhancitil/bobvance" \
       org.label-schema.version=$RELEASE \
       org.label-schema.name="bobvance"
 

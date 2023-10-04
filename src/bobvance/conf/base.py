@@ -114,6 +114,8 @@ INSTALLED_APPS = [
     # Project applications.
     "bobvance.accounts",
     "bobvance.utils",
+    "bobvance.base",
+    "phonenumber_field",
 ]
 
 MIDDLEWARE = [
@@ -159,7 +161,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "bobvance.wsgi.application"
 
 # Translations
-LOCALE_PATHS = (DJANGO_PROJECT_DIR / "conf" / "locale", )
+LOCALE_PATHS = (DJANGO_PROJECT_DIR / "conf" / "locale",)
 
 #
 # SERVING of static and media files
@@ -353,7 +355,9 @@ elif (BASE_DIR / ".git").exists():
         repo = git.Repo(search_parent_directories=True)
         try:
             GIT_SHA = repo.head.object.hexsha
-        except ValueError:  # on startproject initial runs before any git commits have been made
+        except (
+            ValueError
+        ):  # on startproject initial runs before any git commits have been made
             GIT_SHA = repo.active_branch.name
 else:
     GIT_SHA = None
@@ -393,7 +397,7 @@ AXES_COOLOFF_TIME = 1
 # If set, specifies a template to render when a user is locked out. Template
 # receives cooloff_time and failure_limit as context variables. Default: None
 AXES_LOCKOUT_TEMPLATE = "account_blocked.html"
-AXES_LOCKOUT_PARAMETERS = ["username", "email", "ip"]
+AXES_LOCKOUT_PARAMETERS = ["username", "user_agent", "ip_address"]
 
 
 # The default meta precedence order
@@ -458,3 +462,5 @@ if not ELASTIC_APM_SERVER_URL:
 SUBPATH = config("SUBPATH", None)
 if SUBPATH:
     SUBPATH = f"/{SUBPATH.strip('/')}"
+
+GOOGLE_API_KEY = config("GOOGLE_API_KEY", None)

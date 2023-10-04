@@ -45,6 +45,7 @@ django==3.2.21
     #   django-formtools
     #   django-hijack
     #   django-jenkins
+    #   django-localflavor
     #   django-otp
     #   django-phonenumber-field
     #   django-redis
@@ -69,6 +70,10 @@ django-hijack==3.4.1
     #   -r requirements/base.txt
 django-jenkins==0.110.0
     # via -r requirements/test-tools.in
+django-localflavor==4.0
+    # via
+    #   -c requirements/base.txt
+    #   -r requirements/base.txt
 django-ordered-model==3.7.4
     # via
     #   -c requirements/base.txt
@@ -169,6 +174,11 @@ python-dotenv==1.0.0
     # via
     #   -c requirements/base.txt
     #   -r requirements/base.txt
+python-stdnum==1.19
+    # via
+    #   -c requirements/base.txt
+    #   -r requirements/base.txt
+    #   django-localflavor
 pytz==2023.3.post1
     # via
     #   -c requirements/base.txt

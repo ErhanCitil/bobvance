@@ -67,9 +67,7 @@ ELASTIC_APM["DEBUG"] = True
 INSTALLED_APPS += [
     "django_jenkins",
 ]
-PROJECT_APPS = [
-    app for app in INSTALLED_APPS if app.startswith("bobvance.")
-]
+PROJECT_APPS = [app for app in INSTALLED_APPS if app.startswith("bobvance.")]
 JENKINS_TASKS = (
     # 'django_jenkins.tasks.run_pylint',  # Pylint < 2.0 does not run on Python 3.7+
     # "django_jenkins.tasks.run_pep8",  # -> renamed to pycodestyle, but django-jenkins hasn't been updated in 6 years
