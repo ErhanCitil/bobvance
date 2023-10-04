@@ -37,7 +37,7 @@ COPY ./build /app/build/
 COPY ./*.json ./*.js ./.babelrc /app/
 
 # install WITH dev tooling
-RUN npm ciz`
+RUN npm ci
 
 # copy source code
 COPY ./src /app/src
