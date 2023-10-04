@@ -7,12 +7,14 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = ("firstname", "lastname", "email")
 admin.site.register(Customer, CustomerAdmin)
 
-admin.site.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ("name", "price", "new")
+admin.site.register(Product, ProductAdmin)
 
 admin.site.register(OrderProduct)
 class OrderProductInline(admin.TabularInline):
     model = OrderProduct
-    extra = 1
+    extra = 0
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
