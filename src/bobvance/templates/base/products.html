@@ -3,7 +3,9 @@
 {% include 'components/header.html'%}
 
 <div class="flex flex-wrap">
-    {% include 'components/product_card.html' %}
+    {% for product in object_list %}
+        {% include 'components/product_card.html' %}
+    {% endfor %}
 </div>
 
 {% include 'components/footer.html' %}
