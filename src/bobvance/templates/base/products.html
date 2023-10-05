@@ -1,0 +1,8 @@
+{% for product in object_list %}
+    <a href="{% url 'product_detail' product.pk%}">
+    <h1>{{ product.name }}</h1>
+    </a>
+    <p>{{ product.description }}</p>
+    <p>{{ product.price }}</p>
+    <img src="{{ product.image }}" alt="{{product.name}} - Koelkast">
+{% endfor %}
