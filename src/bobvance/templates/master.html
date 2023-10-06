@@ -12,6 +12,7 @@
         <link href="{% static 'bundles/bobvance-css.css' %}" media="all" rel="stylesheet" />
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+        {% block extra_cdn%}{% endblock %}
         {% block extra_css %}{% endblock %}
     </head>
 
