@@ -38,6 +38,7 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     path("", include("bobvance.base.urls")),
+    path("", include("bobvance.contact.urls")),
 ]
 
 # NOTE: The staticfiles_urlpatterns also discovers static files (ie. no need to run collectstatic). Both the static

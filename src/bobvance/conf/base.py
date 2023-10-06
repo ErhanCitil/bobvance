@@ -115,6 +115,7 @@ INSTALLED_APPS = [
     "bobvance.accounts",
     "bobvance.utils",
     "bobvance.base",
+    "bobvance.contact",
     "phonenumber_field",
 ]
 
