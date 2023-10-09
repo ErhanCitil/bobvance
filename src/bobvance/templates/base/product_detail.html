@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="text-gray-700 text-sm overflow-y-auto h-20 mb-3">{{ object.description }}</p>
                 <hr class="my-3">
                 <div class="flex items-center mt-6">
-                    <button class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500 add-to-cart">Voeg toe aan winkelwagen</button>
+                    <button class="px-8 py-2 bg-blue-600 text-white text-sm font-medium rounded add-to-cart">Voeg toe aan winkelwagen</button>
                 </div>
             </div>
         </div>
@@ -49,12 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                 {% for product in more_products %}
                 <a href="{% url 'product_detail' product.pk %}">
-                    <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden h-80">
-                        <div class="flex items-end justify-end h-56 w-full relative">
+                    <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden h-96">
+                        <div class="flex items-end justify-end h-64 w-full relative">
                             <div style="background-image: url('{{ product.image.url }}'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 100%; width: 100%;" class="absolute"></div>
                         </div>
-                        <div class="px-5 py-3 h-24 pb-4">
-                            <h3 class="text-gray-700 uppercase h-16 overflow-y-hidden">{{ product.name }}</h3>
+                        <div class="px-5 py-3 h-32 pb-6">
+                            <h3 class="text-gray-700 uppercase h-20 overflow-y-hidden">{{ product.name }}</h3>
                             <span class="text-gray-500 mt-2">€{{ product.price }}</span>
                         </div>
                     </div>
