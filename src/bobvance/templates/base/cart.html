@@ -18,7 +18,7 @@
 {% block content%}
 {% include 'components/header.html'%}
 <body>
-    <div class="h-screen bg-gray-100 pt-20">
+    <div class="h-screen pt-20">
         <h1 class="mb-10 text-center text-2xl font-bold">Winkelwagen</h1>
         {% if cart_items %}
         <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
@@ -31,7 +31,7 @@
                                 <h2 class="text-lg font-bold text-gray-900">{{ item.product.name }}</h2>
                                 <p class="mt-1 text-xs text-gray-700">{{ item.product.description|truncatewords:5 }}</p>
                             </div>
-                            <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                            <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6 ml-10">
                                 <div class="flex items-center border-gray-100">
                                     <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-600 hover:text-blue-50 quantity-button" data-action="decrease"> - </span>
                                     <input class="h-8 w-8 border bg-white text-center text-xs outline-none quantity-input" type="number" value="{{ item.quantity }}" min="1" data-product-id="{{ item.product.id }}" />
