@@ -3,6 +3,7 @@
 {% block content%}
 {% include 'components/header.html'%}
 
+<h1 class="text-3xl font-bold text-center m-8"> Ons Assortiment </h1>
 <div class="flex flex-wrap">
     {% for product in object_list %}
         {% include 'components/product_card.html' %}
