@@ -3,6 +3,10 @@ from django.views.generic import ListView, DetailView, TemplateView, View
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import json
+
 class Home(TemplateView):
     template_name = 'base/index.html'
 
@@ -54,3 +58,17 @@ class CartView(TemplateView):
         ]
         context['total_price'] = total_price
         return context
+
+@method_decorator(csrf_exempt, name='dispatch')
+class RemoveFromCartView(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        product_id = str(data.get('product_id'))
+        cart = request.session.get('cart', {})
+
+        if product_id in cart:
+            del cart[product_id]
+            request.session['cart'] = cart
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error'}, status=400)
