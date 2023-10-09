@@ -23,12 +23,11 @@
                 <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                     {% for product in products %}
                     <a href="{% url 'product_detail' product.pk%}">
-                        <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                            <div class="flex items-end justify-end h-56 w-full relative">
-                                <div style="background-image: url('{{ product.image.url }}'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 100%; width: 100%;" class="absolute"></div>
+                        <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden h-full flex flex-col">
+                            <div class="flex-1 relative overflow-hidden" style="background-image: url('{{ product.image.url }}'); background-size: contain; background-repeat: no-repeat; background-position: center; min-height: 200px;">
                             </div>
-                            <div class="px-5 py-3">
-                                <h3 class="text-gray-700 uppercase">{{ product.name }}</h3>
+                            <div class="px-5 py-3 flex flex-col">
+                                <h3 class="text-gray-700 uppercase mb-auto">{{ product.name }}</h3>
                                 <span class="text-gray-500 mt-2">€{{ product.price }}</span>
                             </div>
                         </div>
