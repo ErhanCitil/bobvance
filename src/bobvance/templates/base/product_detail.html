@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert('Product toegevoegd aan de winkelwagen!');
+                window.location.href = '{% url "cart" %}';
             } else {
                 alert('Er ging iets mis, probeer het opnieuw.');
             }
