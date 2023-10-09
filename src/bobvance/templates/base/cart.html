@@ -33,9 +33,9 @@
                             </div>
                             <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                                 <div class="flex items-center border-gray-100">
-                                    <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
-                                    <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value="{{ item.quantity }}" min="1" />
-                                    <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </span>
+                                    <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50 quantity-button" data-action="decrease"> - </span>
+                                    <input class="h-8 w-8 border bg-white text-center text-xs outline-none quantity-input" type="number" value="{{ item.quantity }}" min="1" data-product-id="{{ item.product.id }}" />
+                                    <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50 quantity-button" data-action="increase"> + </span>
                                 </div>
                                 <div class="flex items-center space-x-4">
                                     <p class="text-sm">€{{ item.product.price }}</p>
@@ -52,7 +52,7 @@
             <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
                 <div class="mb-2 flex justify-between">
                     <p class="text-gray-700">Subtotaal</p>
-                    <p class="text-gray-700">€{{ total_price }}</p>
+                    <p class="text-gray-700 total-price">€{{ total_price }}</p>
                 </div>
                 <div class="flex justify-between">
                     <p class="text-gray-700">Verzenden</p>
@@ -62,7 +62,7 @@
                 <div class="flex justify-between">
                     <p class="text-lg font-bold">Totaal</p>
                     <div class="">
-                        <p class="mb-1 text-lg font-bold">€{{ total_price }}</p>
+                        <p class="mb-1 text-lg font-bold total-price">€{{ total_price }}</p>
                         <p class="text-sm text-gray-700">Inclusief BTW</p>
                     </div>
                 </div>
@@ -96,6 +96,52 @@
                     location.reload();
                 } else {
                     alert('Er ging iets mis bij het verwijderen van het product.');
+                }
+            })
+        });
+    });
+    document.querySelectorAll('.quantity-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const action = e.target.dataset.action;
+            const input = e.target.parentElement.querySelector('.quantity-input');
+            let quantity = parseInt(input.value);
+
+            if(action === 'increase') {
+                quantity = quantity + 1;
+            } else if(action === 'decrease' && quantity > 1) {
+                quantity = quantity - 1;
+            }
+
+            input.value = quantity;
+
+            input.dispatchEvent(new Event('change'));
+        });
+    });
+
+    document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('change', function(e) {
+            const productId = e.target.dataset.productId;
+            const quantity = e.target.value;
+
+            fetch('/update-cart/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: quantity,
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    document.querySelectorAll('.total-price').forEach(price => {
+                        price.textContent = '€' + data.total_price;
+                    });
+                } else {
+                    alert('Er ging iets mis bij het updaten van de winkelwagen.');
                 }
             })
         });
