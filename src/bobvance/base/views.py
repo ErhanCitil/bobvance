@@ -23,3 +23,6 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['more_products'] = Product.objects.exclude(pk=self.object.pk).order_by('?')[:5]
         return context
+
+class CartView(TemplateView):
+    template_name = 'base/cart.html'
