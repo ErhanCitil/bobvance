@@ -33,16 +33,24 @@
                             </div>
                             <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6 ml-10">
                                 <div class="flex items-center border-gray-100">
-                                    <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-600 hover:text-blue-50 quantity-button" data-action="decrease"> - </span>
-                                    <input class="h-8 w-8 border bg-white text-center text-xs outline-none quantity-input" type="number" value="{{ item.quantity }}" min="1" data-product-id="{{ item.product.id }}" />
-                                    <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-600 hover:text-blue-50 quantity-button" data-action="increase"> + </span>
+                                    <form method="post" action="{% url 'update_cart' %}" class="quantity-form" style="display: flex;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                        <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-600 hover:text-blue-50 quantity-button" data-action="decrease"> - </span>
+                                        <input class="h-8 w-8 border bg-white text-center text-xs outline-none quantity-input" type="number" name="quantity" value="{{ item.quantity }}" min="1" data-product-id="{{ item.product.id }}" />
+                                        <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-600 hover:text-blue-50 quantity-button" data-action="increase"> + </span>
+                                    </form>
                                 </div>
                                 <div class="flex items-center space-x-4">
                                     <p class="text-sm">€{{ item.product.price }}</p>
                                 </div>
                             </div>
                             <div class="mt-52">
-                                <button type="button" data-product-id="{{ item.product.id }}" class="remove-item focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Verwijderen</button>
+                                <form method="post" action="{% url 'remove_from_cart' %}" class="remove-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                    <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Verwijderen</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -72,38 +80,13 @@
         {% endif %}
     </div>
 </body>
-
 {% include 'components/footer.html' %}
-
 <script>
-    document.querySelectorAll('.remove-item').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const productId = this.dataset.productId;
-
-            fetch('/remove-from-cart/', {
-                method: 'POST',
-                body: JSON.stringify({
-                    product_id: productId
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.status === 'success') {
-                    location.reload();
-                } else {
-                    alert('Er ging iets mis bij het verwijderen van het product.');
-                }
-            })
-        });
-    });
     document.querySelectorAll('.quantity-button').forEach(button => {
         button.addEventListener('click', function(e) {
             const action = e.target.dataset.action;
-            const input = e.target.parentElement.querySelector('.quantity-input');
+            const form = e.target.closest('.quantity-form');
+            const input = form.querySelector('.quantity-input');
             let quantity = parseInt(input.value);
 
             if(action === 'increase') {
@@ -113,37 +96,7 @@
             }
 
             input.value = quantity;
-
-            input.dispatchEvent(new Event('change'));
-        });
-    });
-
-    document.querySelectorAll('.quantity-input').forEach(input => {
-        input.addEventListener('change', function(e) {
-            const productId = e.target.dataset.productId;
-            const quantity = e.target.value;
-
-            fetch('/update-cart/', {
-                method: 'POST',
-                body: JSON.stringify({
-                    product_id: productId,
-                    quantity: quantity,
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}',
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.status === 'success') {
-                    document.querySelectorAll('.total-price').forEach(price => {
-                        price.textContent = '€' + data.total_price;
-                    });
-                } else {
-                    alert('Er ging iets mis bij het updaten van de winkelwagen.');
-                }
-            })
+            form.submit();
         });
     });
 </script>

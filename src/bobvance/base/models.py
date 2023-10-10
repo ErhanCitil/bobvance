@@ -54,19 +54,25 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.customer} - {self.id}"
 
+    def total_price(self):
+        return sum(item.total_price() for item in self.order_products.all())
+
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(
-        Order, related_name="order_products", on_delete=models.CASCADE
+        Order, related_name="order_products", on_delete=models.CASCADE, null=True, blank=True
     )
     product = models.ForeignKey(
-        Product, related_name="order_products", on_delete=models.CASCADE
+        Product, related_name="product_orders", on_delete=models.CASCADE
     )
     quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
 
     def __str__(self):
         return f"{self.product.name} - {self.quantity}x"
 
+    def total_price(self):
+        return self.product.price * self.quantity
+
     class Meta:
-        unique_together = ["order", "product"]
+        unique_together = ("order", "product")
         ordering = ["order"]

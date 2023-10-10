@@ -1,29 +1,4 @@
 {% extends 'master.html' %}
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.add-to-cart').addEventListener('click', function() {
-        fetch('{% url "add_to_cart" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: 'product_id={{ object.id }}'
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                window.location.href = '{% url "cart" %}';
-            } else {
-                alert('Er ging iets mis, probeer het opnieuw.');
-            }
-        });
-    });
-});
-</script>
-{% endblock %}
-
 {% block content%}
 {% include 'components/header.html'%}
 <main class="my-8">
@@ -38,9 +13,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <hr class="my-3">
                 <p class="text-gray-700 text-sm overflow-y-auto h-20 mb-3">{{ object.description }}</p>
                 <hr class="my-3">
-                <div class="flex items-center mt-6">
-                    <button class="px-8 py-2 bg-blue-600 text-white text-sm font-medium rounded add-to-cart">Voeg toe aan winkelwagen</button>
-                </div>
+                <form method="post" action="{% url 'add_to_cart' %}">
+                    {% csrf_token %}
+                    <div class="flex items-center mt-6">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button class="px-8 py-2 bg-blue-600 text-white text-sm font-medium rounded add-to-cart">Voeg toe aan winkelwagen</button>
+                    </div>
+                </form>
             </div>
         </div>
 

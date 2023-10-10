@@ -1,11 +1,12 @@
 from bobvance.base.models import Product
 from django.views.generic import ListView, DetailView, TemplateView, View
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
+from django.contrib import messages
 
 class Home(TemplateView):
     template_name = 'base/index.html'
@@ -28,68 +29,72 @@ class ProductDetailView(DetailView):
         context['more_products'] = Product.objects.exclude(pk=self.object.pk).order_by('?')[:5]
         return context
 
+class CartView(View):
+    def get(self, request, *args, **kwargs):
+        cart = request.session.get('cart', {})
+
+        product_ids = [pid for pid in cart.keys() if pid is not None and pid != 'null' and pid.isdigit()]
+
+        cart_items = Product.objects.filter(id__in=product_ids)
+
+        total_price = sum([product.price * cart[str(product.id)] for product in cart_items])
+
+        context = {
+            'cart_items': [
+                {'product': product, 'quantity': cart[str(product.id)]}
+                for product in cart_items
+            ],
+            'total_price': total_price,
+        }
+
+        return render(request, 'base/cart.html', context)
+
+
 class AddToCartView(View):
     def post(self, request, *args, **kwargs):
         product_id = request.POST.get('product_id')
-        product = get_object_or_404(Product, id=product_id)
-        cart = request.session.get('cart', {})
+        quantity = int(request.POST.get('quantity', 1))
 
+        cart = request.session.get('cart', {})
         if product_id in cart:
-            cart[product_id] += 1
+            cart[product_id] += quantity
         else:
-            cart[product_id] = 1
+            cart[product_id] = quantity
 
         request.session['cart'] = cart
 
-        return JsonResponse({'status': 'success'})
+        return redirect('cart')
 
-class CartView(TemplateView):
-    template_name = 'base/cart.html'
+class UpdateCartView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity'))
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        cart = self.request.session.get('cart', {})
-        products_in_cart = Product.objects.filter(id__in=cart.keys())
-        total_price = sum([product.price * int(cart[str(product.id)]) for product in products_in_cart])
+        cart = request.session.get('cart', {})
+        if product_id in cart and quantity > 0:
+            cart[product_id] = quantity
+        elif product_id in cart and quantity <= 0:
+            del cart[product_id]
 
-        context['cart_items'] = [
-            {'product': product, 'quantity': cart[str(product.id)]}
-            for product in products_in_cart
-        ]
-        context['total_price'] = total_price
-        return context
+        request.session['cart'] = cart
 
-@method_decorator(csrf_exempt, name='dispatch')
+        return redirect('cart')
+
 class RemoveFromCartView(View):
     def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
-        product_id = str(data.get('product_id'))
+        product_id = request.POST.get('product_id')
         cart = request.session.get('cart', {})
 
         if product_id in cart:
             del cart[product_id]
             request.session['cart'] = cart
-            return JsonResponse({'status': 'success'})
+            status = 'success'
+            message = 'Product successfully removed from cart.'
         else:
-            return JsonResponse({'status': 'error'}, status=400)
+            status = 'failed'
+            message = 'Product not found in cart.'
 
-class UpdateCartView(View):
-    @method_decorator(csrf_exempt)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+        if request.is_ajax():
+            return JsonResponse({'status': status, 'message': message})
 
-    def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
-        product_id = data.get('product_id')
-        quantity = data.get('quantity')
-        product = get_object_or_404(Product, id=product_id)
-
-        cart = request.session.get('cart', {})
-        cart[product_id] = quantity
-
-        request.session['cart'] = cart
-
-        products_in_cart = Product.objects.filter(id__in=cart.keys())
-        total_price = sum([product.price * int(cart[str(product.id)]) for product in products_in_cart])
-
-        return JsonResponse({'status': 'success', 'total_price': str(total_price)})
+        return redirect('cart')
