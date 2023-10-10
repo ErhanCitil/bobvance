@@ -97,5 +97,4 @@ class RemoveFromCartView(View):
         if request.is_ajax():
             return JsonResponse({'status': status, 'message': message})
 
-        # Redirect to the cart page or the product page as per your flow.
         return redirect('cart')
