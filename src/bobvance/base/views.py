@@ -19,7 +19,24 @@ class Home(TemplateView):
 class ProductsView(ListView):
     model = Product
     template_name = 'base/products.html'
+    context_object_name = 'products'
 
+class NewProductsView(ListView):
+    model = Product
+    template_name = 'base/products.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(new=True)
+
+class UsedProductsView(ListView):
+    model = Product
+    template_name = 'base/products.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(new=False)
+    
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'base/product_detail.html'
