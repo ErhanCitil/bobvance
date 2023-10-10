@@ -6,10 +6,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
-<<<<<<< HEAD
 from django.contrib import messages
-=======
->>>>>>> ea640df87c2bd56b8eb8e0be8e6574928b45380b
 
 class Home(TemplateView):
     template_name = 'base/index.html'
