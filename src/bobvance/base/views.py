@@ -32,7 +32,6 @@ class ProductDetailView(DetailView):
 class CartView(View):
     def get(self, request, *args, **kwargs):
         cart = request.session.get('cart', {})
-        print(f"Cart Session Data: {cart}")
 
         product_ids = [pid for pid in cart.keys() if pid is not None and pid != 'null' and pid.isdigit()]
 
@@ -55,8 +54,6 @@ class AddToCartView(View):
     def post(self, request, *args, **kwargs):
         product_id = request.POST.get('product_id')
         quantity = int(request.POST.get('quantity', 1))
-
-        print(f"Adding Product ID: {product_id} with Quantity: {quantity} to cart.")
 
         cart = request.session.get('cart', {})
         if product_id in cart:
