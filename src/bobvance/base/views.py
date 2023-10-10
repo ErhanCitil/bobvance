@@ -98,3 +98,6 @@ class RemoveFromCartView(View):
             return JsonResponse({'status': status, 'message': message})
 
         return redirect('cart')
+
+class AboutUsView(TemplateView):
+    template_name = 'base/aboutus.html'
