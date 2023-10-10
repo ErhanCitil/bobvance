@@ -1,11 +1,12 @@
 from bobvance.base.models import Product
 from django.views.generic import ListView, DetailView, TemplateView, View
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
+from django.contrib import messages
 
 class Home(TemplateView):
     template_name = 'base/index.html'
@@ -27,3 +28,42 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['more_products'] = Product.objects.exclude(pk=self.object.pk).order_by('?')[:5]
         return context
+
+class CartView(View):
+    def get(self, request, *args, **kwargs):
+        cart = request.session.get('cart', {})
+        print(f"Cart Session Data: {cart}")
+
+        product_ids = [pid for pid in cart.keys() if pid is not None and pid != 'null' and pid.isdigit()]
+
+        cart_items = Product.objects.filter(id__in=product_ids)
+
+        total_price = sum([product.price * cart[str(product.id)] for product in cart_items])
+
+        context = {
+            'cart_items': [
+                {'product': product, 'quantity': cart[str(product.id)]}
+                for product in cart_items
+            ],
+            'total_price': total_price,
+        }
+
+        return render(request, 'base/cart.html', context)
+
+
+class AddToCartView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity', 1))
+
+        print(f"Adding Product ID: {product_id} with Quantity: {quantity} to cart.")
+
+        cart = request.session.get('cart', {})
+        if product_id in cart:
+            cart[product_id] += quantity
+        else:
+            cart[product_id] = quantity
+
+        request.session['cart'] = cart
+
+        return redirect('cart')
