@@ -64,3 +64,38 @@ class AddToCartView(View):
         request.session['cart'] = cart
 
         return redirect('cart')
+
+class UpdateCartView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity'))
+
+        cart = request.session.get('cart', {})
+        if product_id in cart and quantity > 0:
+            cart[product_id] = quantity
+        elif product_id in cart and quantity <= 0:
+            del cart[product_id]
+
+        request.session['cart'] = cart
+
+        return redirect('cart')
+
+class RemoveFromCartView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        cart = request.session.get('cart', {})
+
+        if product_id in cart:
+            del cart[product_id]
+            request.session['cart'] = cart
+            status = 'success'
+            message = 'Product successfully removed from cart.'
+        else:
+            status = 'failed'
+            message = 'Product not found in cart.'
+
+        if request.is_ajax():
+            return JsonResponse({'status': status, 'message': message})
+
+        # Redirect to the cart page or the product page as per your flow.
+        return redirect('cart')
