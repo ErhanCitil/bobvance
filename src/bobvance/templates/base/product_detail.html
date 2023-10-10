@@ -1,29 +1,4 @@
 {% extends 'master.html' %}
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.add-to-cart').addEventListener('click', function() {
-        fetch('{% url "add_to_cart" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: 'product_id={{ object.id }}'
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                window.location.href = '{% url "cart" %}';
-            } else {
-                alert('Er ging iets mis, probeer het opnieuw.');
-            }
-        });
-    });
-});
-</script>
-{% endblock %}
-
 {% block content%}
 {% include 'components/header.html'%}
 <main class="my-8">
