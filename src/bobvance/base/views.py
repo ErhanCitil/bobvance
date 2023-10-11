@@ -132,4 +132,7 @@ class OrderView(FormView):
 
         del self.request.session['cart']
 
-        return redirect('home')
+        return redirect('success')
+
+class SuccesView(TemplateView):
+    template_name = 'base/succes.html'
