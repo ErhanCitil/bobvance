@@ -3,10 +3,7 @@ from django.views.generic import ListView, DetailView, TemplateView, View, FormV
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
 
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-import json
-from django.contrib import messages
+from django.urls import reverse
 
 from bobvance.base.forms import CustomerForm
 
@@ -132,7 +129,18 @@ class OrderView(FormView):
 
         del self.request.session['cart']
 
-        return redirect('success')
+        self.object = order
 
-class SuccesView(TemplateView):
-    template_name = 'base/succes.html'
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('success', kwargs={'pk': self.object.pk})
+
+class SuccessView(TemplateView):
+    template_name = 'base/success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order'] = get_object_or_404(Order, pk=self.kwargs['pk'])
+        context["orderproduct"] = OrderProduct.objects.filter(order=context['order'])
+        return context
