@@ -1,12 +1,11 @@
-from bobvance.base.models import Product
-from django.views.generic import ListView, DetailView, TemplateView, View
+from bobvance.base.models import Product, Order, OrderProduct, Customer
+from django.views.generic import ListView, DetailView, TemplateView, View, FormView
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
 
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-import json
-from django.contrib import messages
+from django.urls import reverse
+
+from bobvance.base.forms import CustomerForm
 
 class Home(TemplateView):
     template_name = 'base/index.html'
@@ -36,7 +35,7 @@ class UsedProductsView(ListView):
 
     def get_queryset(self):
         return Product.objects.filter(new=False)
-    
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'base/product_detail.html'
@@ -116,5 +115,52 @@ class RemoveFromCartView(View):
 
         return redirect('cart')
 
+class OrderView(FormView):
+    form_class = CustomerForm
+    template_name = 'base/order.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = self.request.session.get('cart', {})
+        product_ids = [pid for pid in cart.keys() if pid is not None and pid != 'null' and pid.isdigit()]
+        cart_items = Product.objects.filter(id__in=product_ids)
+        total_price = sum([product.price * cart[str(product.id)] for product in cart_items])
+        context['cart_items'] = [
+            {'product': product, 'quantity': cart[str(product.id)]}
+            for product in cart_items
+        ]
+        context['total_price'] = total_price
+        return context
+
+    def form_valid(self, form):
+        cart = self.request.session.get('cart', {})
+        product_ids = [pid for pid in cart.keys() if pid is not None and pid != 'null' and pid.isdigit()]
+        cart_items = Product.objects.filter(id__in=product_ids)
+        total_price = sum([product.price * cart[str(product.id)] for product in cart_items])
+
+        customer = form.save()
+        order = Order.objects.create(customer=customer, total_price=total_price)
+
+        for product in cart_items:
+            OrderProduct.objects.create(order=order, product=product, quantity=cart[str(product.id)])
+
+        del self.request.session['cart']
+
+        self.object = order
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('success', kwargs={'pk': self.object.pk})
+
+class SuccessView(TemplateView):
+    template_name = 'base/success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order'] = get_object_or_404(Order, pk=self.kwargs['pk'])
+        context["orderproduct"] = OrderProduct.objects.filter(order=context['order'])
+        return context
+    
 class AboutUsView(TemplateView):
     template_name = 'base/aboutus.html'
