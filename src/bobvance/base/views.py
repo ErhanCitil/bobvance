@@ -18,6 +18,23 @@ class Home(TemplateView):
 class ProductsView(ListView):
     model = Product
     template_name = 'base/products.html'
+    context_object_name = 'products'
+
+class NewProductsView(ListView):
+    model = Product
+    template_name = 'base/products.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(new=True)
+
+class UsedProductsView(ListView):
+    model = Product
+    template_name = 'base/products.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(new=False)
 
 class ProductDetailView(DetailView):
     model = Product
@@ -144,3 +161,5 @@ class SuccessView(TemplateView):
         context['order'] = get_object_or_404(Order, pk=self.kwargs['pk'])
         context["orderproduct"] = OrderProduct.objects.filter(order=context['order'])
         return context
+class AboutUsView(TemplateView):
+    template_name = 'base/aboutus.html'

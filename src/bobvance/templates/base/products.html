@@ -4,6 +4,11 @@
 {% include 'components/header.html'%}
 
 <h1 class="text-3xl font-bold text-center m-8"> Ons Assortiment </h1>
+<div class="text-center mb-6">
+    <a href="{% url 'products' %}" class="px-4 py-2 border rounded-md text-blue-700 hover:bg-blue-100">Alle Producten</a>
+    <a href="{% url 'new_products' %}" class="px-4 py-2 border rounded-md text-blue-700 hover:bg-blue-100">Nieuwe Producten</a>
+    <a href="{% url 'used_products' %}" class="px-4 py-2 border rounded-md text-blue-700 hover:bg-blue-100">Gebruikte Producten</a>
+</div>
 <div class="flex flex-wrap">
     {% for product in object_list %}
         {% include 'components/product_card.html' %}
