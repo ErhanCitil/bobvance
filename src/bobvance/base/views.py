@@ -125,7 +125,7 @@ class OrderView(FormView):
         total_price = sum([product.price * cart[str(product.id)] for product in cart_items])
 
         customer = form.save()
-        order = Order.objects.create(customer=customer)
+        order = Order.objects.create(customer=customer, total_price=total_price)
 
         for product in cart_items:
             OrderProduct.objects.create(order=order, product=product, quantity=cart[str(product.id)])
