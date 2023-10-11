@@ -161,5 +161,6 @@ class SuccessView(TemplateView):
         context['order'] = get_object_or_404(Order, pk=self.kwargs['pk'])
         context["orderproduct"] = OrderProduct.objects.filter(order=context['order'])
         return context
+    
 class AboutUsView(TemplateView):
     template_name = 'base/aboutus.html'
