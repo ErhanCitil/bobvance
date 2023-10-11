@@ -3,12 +3,18 @@
 {% block content%}
 {% include 'components/header.html'%}
 
-<form action="" method="POST" class="w-auto">
-    {% csrf_token %}
-    {{ form.as_p }}
+<div class="items-center justify-center p-12">
+    <div class="mx-auto w-full max-w-[550px]">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="p-10">
+        {{form.as_p}}
+        <button class="mt-6 w-full rounded-md bg-blue-600 py-1.5 font-medium text-blue-50 ">Bestellen</button>
+      </div>
+      </form>
+    </div>
+  </div>
 
-    <button class="mt-6 w-auto rounded-md bg-blue-600 py-1.5 font-medium text-blue-50 ">Bestellen</button>
-</form>
 
 {% include 'components/footer.html' %}
 {% endblock %}
