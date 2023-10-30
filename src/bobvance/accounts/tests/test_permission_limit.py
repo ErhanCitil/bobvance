@@ -56,7 +56,9 @@ class PasswordResetViewTests(TestCase):
             username="less_perms_staff_user", password="secret"
         )
         for p in Permission.objects.filter(
-            content_type=ContentType.objects.get(app_label="accounts", model="user")
+            content_type=ContentType.objects.get(
+                app_label="accounts", model="user"
+            )
         ):
             self.less_perms_staff_user.user_permissions.add(p)
 
@@ -94,13 +96,15 @@ class PasswordResetViewTests(TestCase):
 
     def test_change_user_as_user_with_less_permissions(self):
         response = self._change_user(
-            target_user=self.more_perms_staff_user, as_user=self.less_perms_staff_user
+            target_user=self.more_perms_staff_user,
+            as_user=self.less_perms_staff_user,
         )
         self.assertEqual(response.status_code, 200, response.content)
 
     def test_change_user_as_user_with_more_permissions(self):
         response = self._change_user(
-            target_user=self.less_perms_staff_user, as_user=self.more_perms_staff_user
+            target_user=self.less_perms_staff_user,
+            as_user=self.more_perms_staff_user,
         )
         self.assertEqual(response.status_code, 302, response.content)
 
@@ -127,12 +131,14 @@ class PasswordResetViewTests(TestCase):
 
     def test_change_password_as_user_with_less_permissions(self):
         response = self._change_password_page(
-            target_user=self.more_perms_staff_user, as_user=self.less_perms_staff_user
+            target_user=self.more_perms_staff_user,
+            as_user=self.less_perms_staff_user,
         )
         self.assertEqual(response.status_code, 403, response.content)
 
     def test_change_password_as_user_with_more_permissions(self):
         response = self._change_password_page(
-            target_user=self.less_perms_staff_user, as_user=self.more_perms_staff_user
+            target_user=self.less_perms_staff_user,
+            as_user=self.more_perms_staff_user,
         )
         self.assertEqual(response.status_code, 200, response.content)

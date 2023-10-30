@@ -20,7 +20,8 @@ def validate_charfield_entry(value, allow_apostrophe=False):
     for char in invalid_chars:
         if char in value:
             raise ValidationError(
-                _("The provided value contains an invalid character: %s") % char
+                _("The provided value contains an invalid character: %s")
+                % char
             )
     return value
 

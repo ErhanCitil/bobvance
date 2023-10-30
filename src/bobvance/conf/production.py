@@ -29,7 +29,9 @@ TEMPLATES[0]["OPTIONS"]["loaders"] = [
 
 # The file storage engine to use when collecting static files with the
 # collectstatic management command.
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = (
+    "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+)
 
 # Production logging facility.
 
@@ -64,7 +66,9 @@ SHOW_ALERT = False
 ##############################
 
 # APM
-MIDDLEWARE = ["elasticapm.contrib.django.middleware.TracingMiddleware"] + MIDDLEWARE
+MIDDLEWARE = [
+    "elasticapm.contrib.django.middleware.TracingMiddleware"
+] + MIDDLEWARE
 INSTALLED_APPS = INSTALLED_APPS + [
     "elasticapm.contrib.django",
 ]

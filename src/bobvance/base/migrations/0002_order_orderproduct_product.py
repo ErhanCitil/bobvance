@@ -40,7 +40,8 @@ class Migration(migrations.Migration):
                 (
                     "customer",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="base.customer"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="base.customer",
                     ),
                 ),
             ],
@@ -80,7 +81,9 @@ class Migration(migrations.Migration):
                     "quantity",
                     models.PositiveIntegerField(
                         default=1,
-                        validators=[django.core.validators.MinValueValidator(1)],
+                        validators=[
+                            django.core.validators.MinValueValidator(1)
+                        ],
                     ),
                 ),
                 (

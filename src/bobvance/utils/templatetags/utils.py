@@ -48,7 +48,9 @@ def placekitten(width=800, height=600):
         {%placekitten %}
         {%placekitten 200 200 %}
     """
-    return format_html('<img src="{}" />'.format(placekitten_src(width, height)))
+    return format_html(
+        '<img src="{}" />'.format(placekitten_src(width, height))
+    )
 
 
 @register.simple_tag

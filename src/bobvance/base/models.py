@@ -47,10 +47,14 @@ ORDER_STATUS_CHOICES = (
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status = models.CharField(
-        max_length=50, choices=ORDER_STATUS_CHOICES, default=ORDER_STATUS_CHOICES[0][0]
+        max_length=50,
+        choices=ORDER_STATUS_CHOICES,
+        default=ORDER_STATUS_CHOICES[0][0],
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    total_price = models.DecimalField(max_digits=5, decimal_places=0, default=0)
+    total_price = models.DecimalField(
+        max_digits=5, decimal_places=0, default=0
+    )
 
     def __str__(self):
         return f"{self.customer} - {self.id}"
@@ -58,12 +62,18 @@ class Order(models.Model):
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(
-        Order, related_name="order_products", on_delete=models.CASCADE, null=True, blank=True
+        Order,
+        related_name="order_products",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     product = models.ForeignKey(
         Product, related_name="product_orders", on_delete=models.CASCADE
     )
-    quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
+    quantity = models.PositiveIntegerField(
+        default=1, validators=[MinValueValidator(1)]
+    )
 
     def __str__(self):
         return f"{self.product.name} - {self.quantity}x"

@@ -32,7 +32,8 @@ class ValidatorsTestCase(TestCase):
         allowing apostrophe character.
         """
         self.assertEqual(
-            validate_charfield_entry("let's pass", allow_apostrophe=True), "let's pass"
+            validate_charfield_entry("let's pass", allow_apostrophe=True),
+            "let's pass",
         )
 
     def test_validate_postal_code(self):
@@ -90,5 +91,9 @@ class ValidatorsTestCase(TestCase):
         self.assertEqual(validate_phone_number(" 0695959595"), " 0695959595")
         self.assertEqual(validate_phone_number("+33695959595"), "+33695959595")
         self.assertEqual(validate_phone_number("00695959595"), "00695959595")
-        self.assertEqual(validate_phone_number("00-69-59-59-59-5"), "00-69-59-59-59-5")
-        self.assertEqual(validate_phone_number("00 69 59 59 59 5"), "00 69 59 59 59 5")
+        self.assertEqual(
+            validate_phone_number("00-69-59-59-59-5"), "00-69-59-59-59-5"
+        )
+        self.assertEqual(
+            validate_phone_number("00 69 59 59 59 5"), "00 69 59 59 59 5"
+        )

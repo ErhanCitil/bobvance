@@ -5,32 +5,41 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('base', '0003_auto_20231010_1502'),
+        ("base", "0003_auto_20231010_1502"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='orderproduct',
-            options={'ordering': ['order']},
+            name="orderproduct",
+            options={"ordering": ["order"]},
         ),
         migrations.RemoveField(
-            model_name='order',
-            name='order_product',
+            model_name="order",
+            name="order_product",
         ),
         migrations.AddField(
-            model_name='orderproduct',
-            name='order',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='order_products', to='base.order'),
+            model_name="orderproduct",
+            name="order",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="order_products",
+                to="base.order",
+            ),
         ),
         migrations.AlterField(
-            model_name='orderproduct',
-            name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='product_orders', to='base.product'),
+            model_name="orderproduct",
+            name="product",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="product_orders",
+                to="base.product",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='orderproduct',
-            unique_together={('order', 'product')},
+            name="orderproduct",
+            unique_together={("order", "product")},
         ),
     ]

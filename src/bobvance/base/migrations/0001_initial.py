@@ -33,7 +33,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("address", models.CharField(max_length=100)),
-                ("postal_code", localflavor.nl.models.NLZipCodeField(max_length=7)),
+                (
+                    "postal_code",
+                    localflavor.nl.models.NLZipCodeField(max_length=7),
+                ),
                 ("city", models.CharField(max_length=50)),
                 ("country", models.CharField(max_length=50)),
             ],

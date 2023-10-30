@@ -5,27 +5,31 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('base', '0002_order_orderproduct_product'),
+        ("base", "0002_order_orderproduct_product"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='orderproduct',
+            name="orderproduct",
             options={},
         ),
         migrations.AddField(
-            model_name='order',
-            name='order_product',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='base.orderproduct'),
+            model_name="order",
+            name="order_product",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="base.orderproduct",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='orderproduct',
+            name="orderproduct",
             unique_together=set(),
         ),
         migrations.RemoveField(
-            model_name='orderproduct',
-            name='order',
+            model_name="orderproduct",
+            name="order",
         ),
     ]

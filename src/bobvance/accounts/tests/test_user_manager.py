@@ -5,7 +5,9 @@ from ..models import User
 
 class UserManagerTests(TestCase):
     def test_create_superuser(self):
-        user = User.objects.create_superuser("god", "god@heaven.com", "praisejebus")
+        user = User.objects.create_superuser(
+            "god", "god@heaven.com", "praisejebus"
+        )
         self.assertIsNotNone(user.pk)
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)

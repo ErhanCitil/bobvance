@@ -36,7 +36,9 @@ IS_HTTPS = config("IS_HTTPS", default=not DEBUG)
 
 LANGUAGE_CODE = "nl-nl"
 
-TIME_ZONE = "Europe/Amsterdam"  # note: this *may* affect the output of DRF datetimes
+TIME_ZONE = (
+    "Europe/Amsterdam"  # note: this *may* affect the output of DRF datetimes
+)
 
 USE_I18N = True
 
@@ -216,7 +218,9 @@ LOGGING = {
         "verbose": {
             "format": "%(asctime)s %(levelname)s %(name)s %(module)s %(process)d %(thread)d  %(message)s"
         },
-        "timestamped": {"format": "%(asctime)s %(levelname)s %(name)s  %(message)s"},
+        "timestamped": {
+            "format": "%(asctime)s %(levelname)s %(name)s  %(message)s"
+        },
         "simple": {"format": "%(levelname)s  %(message)s"},
         "performance": {
             "format": "%(asctime)s %(process)d | %(thread)d | %(message)s",
@@ -294,8 +298,12 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"
+    },
 ]
 
 
@@ -418,7 +426,9 @@ IPWARE_META_PRECEDENCE_ORDER = (
 #
 # Maykin fork of DJANGO-TWO-FACTOR-AUTH
 #
-TWO_FACTOR_FORCE_OTP_ADMIN = config("TWO_FACTOR_FORCE_OTP_ADMIN", default=not DEBUG)
+TWO_FACTOR_FORCE_OTP_ADMIN = config(
+    "TWO_FACTOR_FORCE_OTP_ADMIN", default=not DEBUG
+)
 TWO_FACTOR_PATCH_ADMIN = config("TWO_FACTOR_PATCH_ADMIN", default=True)
 
 #
@@ -444,7 +454,9 @@ if SENTRY_DSN:
     }
 
     sentry_sdk.init(
-        **SENTRY_CONFIG, integrations=get_sentry_integrations(), send_default_pii=True
+        **SENTRY_CONFIG,
+        integrations=get_sentry_integrations(),
+        send_default_pii=True,
     )
 
 # Elastic APM

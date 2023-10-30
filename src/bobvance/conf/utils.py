@@ -39,7 +39,9 @@ def get_sentry_integrations() -> list:
 
     try:
         from sentry_sdk.integrations import celery
-    except DidNotEnable:  # happens if the celery import fails by the integration
+    except (
+        DidNotEnable
+    ):  # happens if the celery import fails by the integration
         pass
     else:
         extra.append(celery.CeleryIntegration())
