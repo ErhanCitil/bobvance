@@ -48,7 +48,7 @@ development machine.
        $ cd bobvance
 
 3. Install all required (backend) libraries.
-   **Tip:** You can use the ``bootstrap.py`` script to install the requiments
+   **Tip:** You can use the ``bootstrap.py`` script to install the requirements
    and set the proper settings in ``manage.py``. Or, perform the steps
    manually:
 
