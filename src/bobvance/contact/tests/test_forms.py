@@ -1,5 +1,7 @@
-from django_webtest import WebTest
 from django.urls import reverse
+
+from django_webtest import WebTest
+
 from bobvance.contact.models import Contact
 from bobvance.contact.tests.factories import ContactFactory
 

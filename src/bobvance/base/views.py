@@ -1,17 +1,10 @@
-from bobvance.base.models import Product, Order, OrderProduct, Customer
-from django.views.generic import (
-    ListView,
-    DetailView,
-    TemplateView,
-    View,
-    FormView,
-)
-from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
-
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.views.generic import DetailView, FormView, ListView, TemplateView, View
 
 from bobvance.base.forms import CustomerForm
+from bobvance.base.models import Customer, Order, OrderProduct, Product
 
 
 class Home(TemplateView):
@@ -53,9 +46,9 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["more_products"] = Product.objects.exclude(
-            pk=self.object.pk
-        ).order_by("?")[:5]
+        context["more_products"] = Product.objects.exclude(pk=self.object.pk).order_by(
+            "?"
+        )[:5]
         return context
 
 
@@ -179,9 +172,7 @@ class OrderView(FormView):
         )
 
         customer = form.save()
-        order = Order.objects.create(
-            customer=customer, total_price=total_price
-        )
+        order = Order.objects.create(customer=customer, total_price=total_price)
 
         for product in cart_items:
             OrderProduct.objects.create(
@@ -204,9 +195,7 @@ class SuccessView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["order"] = get_object_or_404(Order, pk=self.kwargs["pk"])
-        context["orderproduct"] = OrderProduct.objects.filter(
-            order=context["order"]
-        )
+        context["orderproduct"] = OrderProduct.objects.filter(order=context["order"])
         return context
 
 

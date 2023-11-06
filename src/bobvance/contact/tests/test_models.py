@@ -1,5 +1,6 @@
-from bobvance.contact.models import Contact
 from django.test import TestCase
+
+from bobvance.contact.models import Contact
 from bobvance.contact.tests.factories import ContactFactory
 
 

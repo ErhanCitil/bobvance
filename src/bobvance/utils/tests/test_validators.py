@@ -91,9 +91,5 @@ class ValidatorsTestCase(TestCase):
         self.assertEqual(validate_phone_number(" 0695959595"), " 0695959595")
         self.assertEqual(validate_phone_number("+33695959595"), "+33695959595")
         self.assertEqual(validate_phone_number("00695959595"), "00695959595")
-        self.assertEqual(
-            validate_phone_number("00-69-59-59-59-5"), "00-69-59-59-59-5"
-        )
-        self.assertEqual(
-            validate_phone_number("00 69 59 59 59 5"), "00 69 59 59 59 5"
-        )
+        self.assertEqual(validate_phone_number("00-69-59-59-59-5"), "00-69-59-59-59-5")
+        self.assertEqual(validate_phone_number("00 69 59 59 59 5"), "00 69 59 59 59 5")

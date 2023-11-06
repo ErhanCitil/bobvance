@@ -1,9 +1,8 @@
-from django.contrib import admin
-
-from bobvance.base.models import Customer, Product, OrderProduct, Order
-
 from django import forms
+from django.contrib import admin
 from django.db import models
+
+from bobvance.base.models import Customer, Order, OrderProduct, Product
 
 # Register your models here.
 
@@ -43,9 +42,7 @@ class ReadOnlyTabularInline(admin.TabularInline):
         if isinstance(db_field, (models.CharField, models.TextField)):
             kwargs["widget"] = forms.TextInput(attrs={"readonly": "readonly"})
         elif isinstance(db_field, models.BooleanField):
-            kwargs["widget"] = forms.CheckboxInput(
-                attrs={"disabled": "readonly"}
-            )
+            kwargs["widget"] = forms.CheckboxInput(attrs={"disabled": "readonly"})
         else:
             kwargs["widget"] = forms.TextInput(attrs={"disabled": "readonly"})
         return super().formfield_for_dbfield(db_field, request, **kwargs)

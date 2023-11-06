@@ -56,9 +56,7 @@ class PasswordResetViewTests(TestCase):
             username="less_perms_staff_user", password="secret"
         )
         for p in Permission.objects.filter(
-            content_type=ContentType.objects.get(
-                app_label="accounts", model="user"
-            )
+            content_type=ContentType.objects.get(app_label="accounts", model="user")
         ):
             self.less_perms_staff_user.user_permissions.add(p)
 

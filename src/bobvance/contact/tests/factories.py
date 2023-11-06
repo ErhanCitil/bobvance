@@ -1,4 +1,5 @@
 import factory
+
 from bobvance.contact.models import Contact
 
 

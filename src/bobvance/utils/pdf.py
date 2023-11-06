@@ -14,8 +14,8 @@ import logging
 import mimetypes
 from io import BytesIO
 from pathlib import PurePosixPath
-from typing import Optional, Tuple
-from urllib.parse import ParseResult, urljoin, urlparse
+from typing import Tuple
+from urllib.parse import urljoin, urlparse
 
 from django.conf import settings
 from django.contrib.staticfiles import finders

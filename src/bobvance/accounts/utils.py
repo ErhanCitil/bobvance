@@ -15,9 +15,7 @@ def validate_max_permissions(
         return
 
     if is_superuser:
-        raise ValidationError(
-            _("You need to be superuser to create other superusers.")
-        )
+        raise ValidationError(_("You need to be superuser to create other superusers."))
 
     allowed_permissions = current_user.get_all_permissions()
 
@@ -43,9 +41,7 @@ def validate_max_permissions(
 
     if not given_permissions.issubset(allowed_permissions):
         raise ValidationError(
-            _(
-                "You cannot create or update a user with more permissions than yourself."
-            )
+            _("You cannot create or update a user with more permissions than yourself.")
         )
 
 

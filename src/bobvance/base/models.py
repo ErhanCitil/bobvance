@@ -52,9 +52,7 @@ class Order(models.Model):
         default=ORDER_STATUS_CHOICES[0][0],
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    total_price = models.DecimalField(
-        max_digits=5, decimal_places=0, default=0
-    )
+    total_price = models.DecimalField(max_digits=5, decimal_places=0, default=0)
 
     def __str__(self):
         return f"{self.customer} - {self.id}"
@@ -71,9 +69,7 @@ class OrderProduct(models.Model):
     product = models.ForeignKey(
         Product, related_name="product_orders", on_delete=models.CASCADE
     )
-    quantity = models.PositiveIntegerField(
-        default=1, validators=[MinValueValidator(1)]
-    )
+    quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
 
     def __str__(self):
         return f"{self.product.name} - {self.quantity}x"

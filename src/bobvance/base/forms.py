@@ -1,5 +1,6 @@
-from bobvance.base.models import Customer
 from django import forms
+
+from bobvance.base.models import Customer
 
 
 class CustomerForm(forms.ModelForm):

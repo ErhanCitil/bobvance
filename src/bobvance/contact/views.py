@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import FormView
+
 from bobvance.contact.forms import ContactForm
 
 # Create your views here.
