@@ -75,12 +75,17 @@ class CartView(View):
             [product.price * cart[str(product.id)] for product in cart_items]
         )
 
+        if total_price <= 500:
+            shipping_price = 25
+            total_price += shipping_price
+
         context = {
             "cart_items": [
                 {"product": product, "quantity": cart[str(product.id)]}
                 for product in cart_items
             ],
             "total_price": total_price,
+            "shipping_price": shipping_price,
         }
 
         return render(request, "base/cart.html", context)
