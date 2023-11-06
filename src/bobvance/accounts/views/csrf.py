@@ -14,6 +14,4 @@ def csrf_failure(request, reason="", template_name=CSRF_FAILURE_TEMPLATE_NAME):
     """
     if request.path in settings.LOGIN_URLS and request.user.is_authenticated:
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-    return original_csrf_failure(
-        request, reason=reason, template_name=template_name
-    )
+    return original_csrf_failure(request, reason=reason, template_name=template_name)

@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from bobvance.contact.models import Contact
 
 # Register your models here.

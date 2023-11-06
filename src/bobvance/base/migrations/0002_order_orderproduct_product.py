@@ -81,9 +81,7 @@ class Migration(migrations.Migration):
                     "quantity",
                     models.PositiveIntegerField(
                         default=1,
-                        validators=[
-                            django.core.validators.MinValueValidator(1)
-                        ],
+                        validators=[django.core.validators.MinValueValidator(1)],
                     ),
                 ),
                 (

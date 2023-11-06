@@ -41,9 +41,7 @@ class ResetSequences(migrations.RunSQL):
     def __init__(self, *args, **kwargs):
         super().__init__(None, *args, **kwargs)
 
-    def database_forwards(
-        self, app_label, schema_editor, from_state, to_state
-    ) -> None:
+    def database_forwards(self, app_label, schema_editor, from_state, to_state) -> None:
         if router.allow_migrate(
             schema_editor.connection.alias, app_label, **self.hints
         ):

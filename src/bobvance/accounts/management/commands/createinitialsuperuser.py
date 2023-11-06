@@ -67,9 +67,7 @@ class Command(BaseCommand):
         user = qs.get()
 
         if not password and options["generate_password"]:
-            options["password"] = self.UserModel.objects.make_random_password(
-                length=20
-            )
+            options["password"] = self.UserModel.objects.make_random_password(length=20)
 
         if options["password"] or not PASSWORD_FROM_ENV_SUPPORTED:
             self.stdout.write("Setting user password...")
@@ -78,17 +76,13 @@ class Command(BaseCommand):
 
         if options["email_password_reset"]:
             password_reset_path = reverse("admin_password_reset")
-            default_host = (
-                settings.ALLOWED_HOSTS[0] if settings.ALLOWED_HOSTS else ""
-            )
+            default_host = settings.ALLOWED_HOSTS[0] if settings.ALLOWED_HOSTS else ""
             if default_host == "*":
                 default_host = ""
             domain = options["domain"] or default_host
 
             pw_reset_link = (
-                f"https://{domain}{password_reset_path}"
-                if domain
-                else "unknown url"
+                f"https://{domain}{password_reset_path}" if domain else "unknown url"
             )
             send_mail(
                 f"Your admin user for {settings.PROJECT_NAME} ({domain or 'unknown url'})",
