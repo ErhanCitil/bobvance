@@ -4,6 +4,8 @@ from django.db import models
 from localflavor.nl.models import NLZipCodeField
 from phonenumber_field.modelfields import PhoneNumberField
 
+from bobvance.base.choices import OrderStatusChoices
+
 
 # Create your models here.
 class Customer(models.Model):
@@ -31,25 +33,12 @@ class Product(models.Model):
         return self.name
 
 
-IN_PROGRESS = "In_progress"
-SHIPPED = "Shipped"
-DELIVERED = "Delivered"
-CANCELLED = "Cancelled"
-
-ORDER_STATUS_CHOICES = (
-    (IN_PROGRESS, "In progress"),
-    (SHIPPED, "Shipped"),
-    (DELIVERED, "Delivered"),
-    (CANCELLED, "Cancelled"),
-)
-
-
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status = models.CharField(
         max_length=50,
-        choices=ORDER_STATUS_CHOICES,
-        default=ORDER_STATUS_CHOICES[0][0],
+        choices=OrderStatusChoices.choices,
+        default=OrderStatusChoices.in_progress,
     )
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=5, decimal_places=0, default=0)
