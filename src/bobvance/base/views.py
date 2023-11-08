@@ -68,8 +68,8 @@ class CartView(View):
             [product.price * cart[str(product.id)] for product in cart_items]
         )
 
+        shipping_price = 25
         if total_price <= 500:
-            shipping_price = 25
             total_price += shipping_price
 
         context = {
