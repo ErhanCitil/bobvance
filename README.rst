@@ -26,5 +26,5 @@ commands.
 References
 ==========
 
-* `Issues <https://github.com/erhancitil/issues>`_
+* `Issues <https://github.com/erhancitil/bobvance/issues>`_
 * `Code <https://github.com/erhancitil/bobvance>`_
