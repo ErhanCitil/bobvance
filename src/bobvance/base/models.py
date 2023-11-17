@@ -12,7 +12,7 @@ class Customer(models.Model):
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     email = models.EmailField()
-    phonenumber = PhoneNumberField()
+    phonenumber = PhoneNumberField(error_messages={"invalid": "Het ingevoerde telefoonnummer is niet juist. Gebruik het formaat +31 6xxxxxxxx."})
     address = models.CharField(max_length=100)
     postal_code = NLZipCodeField()
     city = models.CharField(max_length=50)

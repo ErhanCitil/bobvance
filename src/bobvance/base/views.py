@@ -178,8 +178,8 @@ class OrderView(FormView):
             OrderProduct.objects.create(
                 order=order, product=product, quantity=cart[str(product.id)]
             )
-
-        del self.request.session["cart"]
+        if 'cart' in self.request.session:
+            del self.request.session["cart"]
 
         self.object = order
 
