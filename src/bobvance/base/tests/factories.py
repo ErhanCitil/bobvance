@@ -1,7 +1,7 @@
 import factory
 from factory.fuzzy import FuzzyChoice
 from bobvance.base.models import Customer, Order, OrderProduct, Product
-from bobvance.base.choices import OrderStatusChoices
+import random
 
 class CustomerFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -10,9 +10,9 @@ class CustomerFactory(factory.django.DjangoModelFactory):
     firstname = factory.Faker("first_name")
     lastname = factory.Faker("last_name")
     email = factory.Faker("email")
-    phonenumber = factory.Faker("phone_number")
+    phonenumber = factory.LazyFunction(lambda: f"+31 6{random.randint(100, 999)}{random.randint(10000, 99999)}")
     address = factory.Faker("street_address")
-    postal_code = factory.Faker("postalcode")
+    postal_code = factory.LazyFunction(lambda: f"{random.randint(1000, 9999)} {''.join(random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for i in range(2))}")
     city = factory.Faker("city")
     country = factory.Faker("country")
 
