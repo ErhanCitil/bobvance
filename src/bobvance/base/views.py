@@ -4,7 +4,9 @@ from django.urls import reverse
 from django.views.generic import DetailView, FormView, ListView, TemplateView, View
 
 from bobvance.base.forms import CustomerForm
-from bobvance.base.models import Customer, Order, OrderProduct, Product
+from bobvance.base.models import Order, OrderProduct, Product
+
+from decimal import Decimal
 
 
 class Home(TemplateView):
@@ -68,8 +70,8 @@ class CartView(View):
             [product.price * cart[str(product.id)] for product in cart_items]
         )
 
-        shipping_price = 25
-        if total_price <= 500:
+        shipping_price = 25 
+        if total_price <= Decimal('500'):
             total_price += shipping_price
 
         context = {

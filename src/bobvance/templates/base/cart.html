@@ -64,7 +64,7 @@
                 </div>
                 <div class="flex justify-between">
                     <p class="text-gray-700">Verzenden</p>
-                    {% if shipping_price %}
+                    {% if total_price <= 500 %}
                     <p class="text-gray-700">€{{ shipping_price }}</p>
                     {% else %}
                     <p class="text-gray-700">Gratis</p>
