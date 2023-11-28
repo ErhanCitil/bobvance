@@ -3,6 +3,7 @@ from factory.fuzzy import FuzzyChoice
 from bobvance.base.models import Customer, Order, OrderProduct, Product
 import random
 
+
 class CustomerFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Customer
@@ -15,6 +16,7 @@ class CustomerFactory(factory.django.DjangoModelFactory):
     postal_code = factory.LazyFunction(lambda: f"{random.randint(1000, 9999)} {''.join(random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for i in range(2))}")
     city = factory.Faker("city")
     country = factory.Faker("country")
+
 
 class ProductFactory(factory.django.DjangoModelFactory):
     class Meta:

@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from bobvance.base.tests.factories import CustomerFactory, ProductFactory
 
+
 class ViewsTestCase(TestCase):
     def home_view(self):
         url = reverse("home")
@@ -44,6 +45,7 @@ class ViewsTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
+
 class NewAndUsedProductsTestCase(TestCase):
     def setUp(self):
         self.new_product = ProductFactory(new=True)
@@ -60,6 +62,7 @@ class NewAndUsedProductsTestCase(TestCase):
         response = self.client.get(url)
         self.assertContains(response, self.used_product.name)
         self.assertNotContains(response, self.new_product.name)
+
 
 class ProductDetailViewTestCase(TestCase):
     def setUp(self):

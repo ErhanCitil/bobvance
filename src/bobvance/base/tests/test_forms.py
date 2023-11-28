@@ -2,6 +2,7 @@ from bobvance.base.tests.factories import CustomerFactory, ProductFactory
 from django_webtest import WebTest
 from django.urls import reverse
 
+
 class FormTestCase(WebTest):
     def setUp(self):
         self.customer = CustomerFactory()
@@ -35,7 +36,7 @@ class FormTestCase(WebTest):
         """
 
         form = self.app.get(self.url).form
-        form["phonenumber"] =  "1234567890"
+        form["phonenumber"] = "1234567890"
         response = form.submit()
         self.assertEqual(response.context["form"].errors['phonenumber'][0], 'Het ingevoerde telefoonnummer is niet juist. Gebruik het formaat +31 6xxxxxxxx.')
 
@@ -45,13 +46,13 @@ class FormTestCase(WebTest):
         """
 
         form = self.app.get(self.url).form
-        form["postal_code"] =  "1234ABB"
+        form["postal_code"] = "1234ABB"
         response = form.submit()
         self.assertEqual(response.context["form"].errors['postal_code'][0], 'Enter a valid zip code.')
 
     def test_wrong_email(self):
         form = self.app.get(self.url).form
-        form["email"] =  "test"
+        form["email"] = "test"
         response = form.submit()
         self.assertEqual(response.context["form"].errors['email'][0], 'Voer een geldig e-mailadres in.')
 
