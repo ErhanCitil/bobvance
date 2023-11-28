@@ -69,8 +69,7 @@ def check_missing_init_files(app_configs, **kwargs):
 
         errors.append(
             Warning(
-                "Directory %s does not contain an `__init__.py` file" % dirpath
-                + dirname,
+                "Directory %s does not contain an `__init__.py` file" % dirpath + dirname,
                 hint="Consider adding this module to make sure tests are picked up",
                 id="utils.W001",
             )
