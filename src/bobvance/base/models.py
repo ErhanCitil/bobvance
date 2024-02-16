@@ -28,6 +28,7 @@ class Product(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to="product_img/")
     new = models.BooleanField(default=True)
+    review = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
