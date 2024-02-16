@@ -6,9 +6,11 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from bobvance.base.choices import OrderStatusChoices
 
+from bobvance.accounts.models import User
 
 # Create your models here.
 class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     email = models.EmailField()

@@ -39,6 +39,7 @@ urlpatterns = [
     ),
     path("", include("bobvance.base.urls")),
     path("", include("bobvance.contact.urls")),
+    path("", include("bobvance.login.urls")),
 ]
 
 # NOTE: The staticfiles_urlpatterns also discovers static files (ie. no need to run collectstatic). Both the static
