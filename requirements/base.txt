@@ -62,7 +62,7 @@ pillow==10.0.1
     # via -r requirements/base.in
 polib==1.2.0
     # via django-rosetta
-psycopg2==2.9.8
+psycopg2==2.9.9
     # via -r requirements/base.in
 python-decouple==3.8
     # via -r requirements/base.in
