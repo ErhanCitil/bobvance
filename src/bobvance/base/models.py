@@ -1,13 +1,9 @@
-from django.core.validators import MinValueValidator
 from django.db import models
-
+from django.core.validators import MinValueValidator
 from localflavor.nl.models import NLZipCodeField
 from phonenumber_field.modelfields import PhoneNumberField
+from bobvance.base.choices import OrderStatusChoices, PaymentMethodChoices, PaymentStatusChoices
 
-from bobvance.base.choices import OrderStatusChoices
-
-
-# Create your models here.
 class Customer(models.Model):
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
@@ -34,8 +30,18 @@ class Product(models.Model):
         return self.name
 
 
+class Payment(models.Model):
+    method = models.CharField(max_length=50, choices=PaymentMethodChoices.choices, default=PaymentMethodChoices.credit_card)
+    status = models.CharField(max_length=20, choices=PaymentStatusChoices.choices, default=PaymentStatusChoices.pending)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.method} - {self.status}"
+
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(
         max_length=50,
         choices=OrderStatusChoices.choices,
