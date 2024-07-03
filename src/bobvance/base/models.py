@@ -33,7 +33,6 @@ class Product(models.Model):
 class Payment(models.Model):
     method = models.CharField(max_length=50, choices=PaymentMethodChoices.choices, default=PaymentMethodChoices.credit_card)
     status = models.CharField(max_length=20, choices=PaymentStatusChoices.choices, default=PaymentStatusChoices.pending)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.method} - {self.status}"
