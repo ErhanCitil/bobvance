@@ -8,12 +8,14 @@ class OrderStatusChoices(models.TextChoices):
     delivered = "Delivered", _("Delivered")
     cancelled = "Cancelled", _("Cancelled")
 
+
 class PaymentMethodChoices(models.TextChoices):
-    credit_card = 'credit_card', _('Credit Card')
-    debit_card = 'debit_card', _('Debit Card')
-    paypal = 'paypal', _('PayPal')
-    bank_transfer = 'bank_transfer', _('Bank Transfer')
-    cash = 'cash', _('Cash')
+    credit_card = "credit_card", _("Credit Card")
+    debit_card = "debit_card", _("Debit Card")
+    paypal = "paypal", _("PayPal")
+    bank_transfer = "bank_transfer", _("Bank Transfer")
+    cash = "cash", _("Cash")
+
 
 class PaymentStatusChoices(models.TextChoices):
     pending = "Pending", _("Pending")
