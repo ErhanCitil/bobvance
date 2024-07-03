@@ -36,11 +36,14 @@ class ContactViewTest(WebTest):
         form["email"] = "test"
         response = form.submit()
         self.assertEqual(
-            response.context["form"].errors["email"][0], "Voer een geldig e-mailadres in."
+            response.context["form"].errors["email"][0],
+            "Voer een geldig e-mailadres in.",
         )
 
     def test_empty_name_field(self):
         form = self.app.get(reverse("contact")).form
         form["name"] = ""
         response = form.submit()
-        self.assertEqual(response.context["form"].errors["name"][0], "Dit veld is verplicht.")
+        self.assertEqual(
+            response.context["form"].errors["name"][0], "Dit veld is verplicht."
+        )

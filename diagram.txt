@@ -1,0 +1,205 @@
+---
+Django ER Diagram
+---
+erDiagram
+Permission {
+    AutoField id
+    CharField name
+    ForeignKey content_type
+    CharField codename
+}
+Group {
+    AutoField id
+    CharField name
+    ManyToManyField permissions
+}
+Session {
+    CharField session_key
+    TextField session_data
+    DateTimeField expire_date
+}
+ContentType {
+    AutoField id
+    CharField app_label
+    CharField model
+}
+StaticDevice {
+    AutoField id
+    ForeignKey user
+    CharField name
+    BooleanField confirmed
+    DateTimeField throttling_failure_timestamp
+    PositiveIntegerField throttling_failure_count
+}
+StaticToken {
+    AutoField id
+    ForeignKey device
+    CharField token
+}
+TOTPDevice {
+    AutoField id
+    ForeignKey user
+    CharField name
+    BooleanField confirmed
+    DateTimeField throttling_failure_timestamp
+    PositiveIntegerField throttling_failure_count
+    CharField key
+    PositiveSmallIntegerField step
+    BigIntegerField t0
+    PositiveSmallIntegerField digits
+    PositiveSmallIntegerField tolerance
+    SmallIntegerField drift
+    BigIntegerField last_t
+}
+PhoneDevice {
+    AutoField id
+    ForeignKey user
+    CharField name
+    BooleanField confirmed
+    DateTimeField throttling_failure_timestamp
+    PositiveIntegerField throttling_failure_count
+    CharField number
+    CharField key
+    CharField method
+}
+ContentTypeProxy {
+    AutoField id
+    CharField app_label
+    CharField model
+}
+AppGroup {
+    BigAutoField id
+    PositiveIntegerField order
+    JSONField translations
+    CharField name
+    SlugField slug
+    ManyToManyField models
+}
+AppLink {
+    BigAutoField id
+    PositiveIntegerField order
+    JSONField translations
+    ForeignKey app_group
+    CharField name
+    CharField link
+}
+LogEntry {
+    AutoField id
+    DateTimeField action_time
+    ForeignKey user
+    ForeignKey content_type
+    TextField object_id
+    CharField object_repr
+    PositiveSmallIntegerField action_flag
+    TextField change_message
+}
+AccessFailureLog {
+    AutoField id
+    CharField user_agent
+    GenericIPAddressField ip_address
+    CharField username
+    CharField http_accept
+    CharField path_info
+    DateTimeField attempt_time
+    BooleanField locked_out
+}
+AccessAttempt {
+    AutoField id
+    CharField user_agent
+    GenericIPAddressField ip_address
+    CharField username
+    CharField http_accept
+    CharField path_info
+    DateTimeField attempt_time
+    TextField get_data
+    TextField post_data
+    PositiveIntegerField failures_since_start
+}
+AccessLog {
+    AutoField id
+    CharField user_agent
+    GenericIPAddressField ip_address
+    CharField username
+    CharField http_accept
+    CharField path_info
+    DateTimeField attempt_time
+    DateTimeField logout_time
+}
+User {
+    AutoField id
+    CharField password
+    DateTimeField last_login
+    BooleanField is_superuser
+    CharField username
+    CharField first_name
+    CharField last_name
+    CharField email
+    BooleanField is_staff
+    BooleanField is_active
+    DateTimeField date_joined
+    ManyToManyField groups
+    ManyToManyField user_permissions
+}
+Customer {
+    BigAutoField id
+    CharField firstname
+    CharField lastname
+    CharField email
+    CharField phonenumber
+    CharField address
+    CharField postal_code
+    CharField city
+    CharField country
+}
+Product {
+    BigAutoField id
+    CharField name
+    DecimalField price
+    TextField description
+    FileField image
+    BooleanField new
+    TextField review
+}
+Payment {
+    BigAutoField id
+    CharField method
+    CharField status
+    DateTimeField created_at
+}
+Order {
+    BigAutoField id
+    ForeignKey customer
+    ForeignKey payment
+    CharField status
+    DateTimeField created_at
+    DecimalField total_price
+}
+OrderProduct {
+    BigAutoField id
+    ForeignKey order
+    ForeignKey product
+    PositiveIntegerField quantity
+}
+Contact {
+    BigAutoField id
+    CharField name
+    CharField email
+    TextField message
+    DateTimeField created_at
+}
+Permission }|--|| ContentType : content_type
+Group }|--|{ Permission : permissions
+StaticDevice }|--|| User : user
+StaticToken }|--|| StaticDevice : device
+TOTPDevice }|--|| User : user
+PhoneDevice }|--|| User : user
+AppGroup }|--|{ ContentTypeProxy : models
+AppLink }|--|| AppGroup : app_group
+LogEntry }|--|| User : user
+LogEntry }|--|| ContentType : content_type
+User }|--|{ Group : groups
+User }|--|{ Permission : user_permissions
+Order }|--|| Customer : customer
+Order }|--|| Payment : payment
+OrderProduct }|--|| Order : order
+OrderProduct }|--|| Product : product

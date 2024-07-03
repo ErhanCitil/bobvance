@@ -1,6 +1,8 @@
-from bobvance.base.tests.factories import CustomerFactory, ProductFactory
-from django_webtest import WebTest
 from django.urls import reverse
+
+from django_webtest import WebTest
+
+from bobvance.base.tests.factories import CustomerFactory, ProductFactory
 
 
 class FormTestCase(WebTest):
@@ -38,7 +40,10 @@ class FormTestCase(WebTest):
         form = self.app.get(self.url).form
         form["phonenumber"] = "1234567890"
         response = form.submit()
-        self.assertEqual(response.context["form"].errors['phonenumber'][0], 'Het ingevoerde telefoonnummer is niet juist. Gebruik het formaat +31 6xxxxxxxx.')
+        self.assertEqual(
+            response.context["form"].errors["phonenumber"][0],
+            "Het ingevoerde telefoonnummer is niet juist. Gebruik het formaat +31 6xxxxxxxx.",
+        )
 
     def test_wrong_postal_code(self):
         """
@@ -48,22 +53,43 @@ class FormTestCase(WebTest):
         form = self.app.get(self.url).form
         form["postal_code"] = "1234ABB"
         response = form.submit()
-        self.assertEqual(response.context["form"].errors['postal_code'][0], 'Enter a valid zip code.')
+        self.assertEqual(
+            response.context["form"].errors["postal_code"][0], "Enter a valid zip code."
+        )
 
     def test_wrong_email(self):
         form = self.app.get(self.url).form
         form["email"] = "test"
         response = form.submit()
-        self.assertEqual(response.context["form"].errors['email'][0], 'Voer een geldig e-mailadres in.')
+        self.assertEqual(
+            response.context["form"].errors["email"][0],
+            "Voer een geldig e-mailadres in.",
+        )
 
     def test_empty_form(self):
         form = self.app.get(self.url).form
         response = form.submit()
-        self.assertEqual(response.context["form"].errors['firstname'][0], 'Dit veld is verplicht.')
-        self.assertEqual(response.context["form"].errors['lastname'][0], 'Dit veld is verplicht.')
-        self.assertEqual(response.context["form"].errors['email'][0], 'Dit veld is verplicht.')
-        self.assertEqual(response.context["form"].errors['address'][0], 'Dit veld is verplicht.')
-        self.assertEqual(response.context["form"].errors['postal_code'][0], 'Dit veld is verplicht.')
-        self.assertEqual(response.context["form"].errors['city'][0], 'Dit veld is verplicht.')
-        self.assertEqual(response.context["form"].errors['country'][0], 'Dit veld is verplicht.')
-        self.assertEqual(response.context["form"].errors['phonenumber'][0], 'Dit veld is verplicht.')
+        self.assertEqual(
+            response.context["form"].errors["firstname"][0], "Dit veld is verplicht."
+        )
+        self.assertEqual(
+            response.context["form"].errors["lastname"][0], "Dit veld is verplicht."
+        )
+        self.assertEqual(
+            response.context["form"].errors["email"][0], "Dit veld is verplicht."
+        )
+        self.assertEqual(
+            response.context["form"].errors["address"][0], "Dit veld is verplicht."
+        )
+        self.assertEqual(
+            response.context["form"].errors["postal_code"][0], "Dit veld is verplicht."
+        )
+        self.assertEqual(
+            response.context["form"].errors["city"][0], "Dit veld is verplicht."
+        )
+        self.assertEqual(
+            response.context["form"].errors["country"][0], "Dit veld is verplicht."
+        )
+        self.assertEqual(
+            response.context["form"].errors["phonenumber"][0], "Dit veld is verplicht."
+        )
