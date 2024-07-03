@@ -3,8 +3,10 @@ from django.core.validators import MinValueValidator
 from localflavor.nl.models import NLZipCodeField
 from phonenumber_field.modelfields import PhoneNumberField
 from bobvance.base.choices import OrderStatusChoices, PaymentMethodChoices, PaymentStatusChoices
+import uuid
 
 class Customer(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     email = models.EmailField()
@@ -19,6 +21,7 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     description = models.TextField()
@@ -31,6 +34,7 @@ class Product(models.Model):
 
 
 class Payment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     method = models.CharField(max_length=50, choices=PaymentMethodChoices.choices, default=PaymentMethodChoices.credit_card)
     status = models.CharField(max_length=20, choices=PaymentStatusChoices.choices, default=PaymentStatusChoices.pending)
 
@@ -39,6 +43,7 @@ class Payment(models.Model):
 
 
 class Order(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(
@@ -54,6 +59,7 @@ class Order(models.Model):
 
 
 class OrderProduct(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     order = models.ForeignKey(
         Order,
         related_name="order_products",
